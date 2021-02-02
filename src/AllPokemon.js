@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import PokemonCard from './PokemonCard'
+import PokemonCard from './PokemonCard';
 
 const useStyles = makeStyles({
     container: {
