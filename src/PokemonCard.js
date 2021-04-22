@@ -27,14 +27,24 @@ const useStyles = makeStyles({
 function PokemonCard() {
     const classes = useStyles();
     
-    const [pokemon, setPokemon] = useState([]);
-    // const [pokeid, setPokeid] = useState({});
+    const [pokedex, setPokedex] = useState([]);
+    // const [wildPokemon, setWildPokemon] = ({});
     
     useEffect(() => {
-        axios('https://pokeapi.co/api/v2/pokemon/pikachu').then(res => {
-            setPokemon(res.data.abilities[0].name)
-        });
+        encounterWildPokemon();
     }, []);
+
+    const pokeId = () => {
+        const min = Math.ceil(1);
+        const max = Math.floor(151);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+
+    const encounterWildPokemon = () => {
+        axios.get('https://pokeapi.co/api/v2/pokemon/' + pokeId()).then(res => {
+            setPokedex(res.data);
+        });
+    }
 
     return (
         <>
@@ -45,7 +55,12 @@ function PokemonCard() {
                         {/* <img src={'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + setPokeid.id + ".png'} alt='' /> */}
                         <CardContent>
                             <Typography gutterBottom variant="h5" component="h2">
-                                {pokemon}
+                            {pokedex.map(pokemon => (
+                                <div className="pokemon" key={pokemon.id}>
+                                    <img src={"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + pokemon.id + ".png"} className="sprite"  alt=''/>
+                                    <h3 className="pokemon-name">{pokemon.name}</h3>
+                                </div>
+                            ))}
                             </Typography>
                         </CardContent>
                     </CardActionArea>
